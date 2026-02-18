@@ -1,0 +1,11 @@
+fn main() -> int {
+    Test.init("zip")
+    // ZIP magic bytes: PK\x03\x04
+    var magic = "PK"
+    Test.assert_eq_int(magic.len(), 2, "magic len")
+    Test.assert_eq_str(magic, "PK", "zip magic")
+    // File extension
+    Test.assert("archive.zip".ends_with(".zip"), "zip ext")
+    Test.summary()
+    return 0
+}

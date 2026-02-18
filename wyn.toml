@@ -1,0 +1,4 @@
+[project]
+name = "zip"
+version = "0.1.0"
+description = "Read/write ZIP archives (wraps miniz)"
