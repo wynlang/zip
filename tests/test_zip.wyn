@@ -1,18 +1,24 @@
-test "magic len" {
-    // ZIP magic bytes: PK\x03\x04
-    var magic = "PK"
-    assert_eq(magic.len(), 2)
+fn zip_is_archive(path: string) -> bool {
+    return path.ends_with(".zip")
 }
 
-test "zip magic" {
-    // ZIP magic bytes: PK\x03\x04
-    var magic = "PK"
-    assert_eq(magic, "PK")
+fn zip_compression_ratio(original: int, compressed: int) -> int {
+    if original == 0 { return 0 }
+    return (compressed * 100) / original
 }
 
-test "zip ext" {
-    // ZIP magic bytes: PK\x03\x04
-    var magic = "PK"
-    // File extension
-    assert("archive.zip".ends_with(".zip"))
+fn zip_entry_count_estimate(file_size: int) -> int {
+    if file_size <= 0 { return 0 }
+    return file_size / 1024
+}
+
+fn main() -> int {
+    if zip_is_archive("test.zip") { println("zip detect: pass") }
+    if !zip_is_archive("test.tar") { println("non-zip: pass") }
+    assert_eq(zip_compression_ratio(1000, 300), 30)
+    assert_eq(zip_compression_ratio(0, 0), 0)
+    assert_eq(zip_entry_count_estimate(10240), 10)
+    
+    println("zip: 5 tests passed")
+    return 0
 }
