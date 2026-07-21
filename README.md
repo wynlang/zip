@@ -1,4 +1,4 @@
-# zip — Official Wyn Package
+# zip - Official Wyn Package
 
 Read/write ZIP archives. Wraps miniz (single C file).
 
@@ -17,4 +17,4 @@ var content = Zip_read(z, "readme.txt")
 Zip_close(z)
 ```
 
-No system dependency — miniz is bundled.
+No system dependency - miniz is bundled.
