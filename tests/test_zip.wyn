@@ -14,7 +14,7 @@ fn zip_entry_count_estimate(file_size: int) -> int {
 
 fn main() -> int {
     if zip_is_archive("test.zip") { println("zip detect: pass") }
-    if !zip_is_archive("test.tar") { println("non-zip: pass") }
+    if not zip_is_archive("test.tar") { println("non-zip: pass") }
     assert_eq(zip_compression_ratio(1000, 300), 30)
     assert_eq(zip_compression_ratio(0, 0), 0)
     assert_eq(zip_entry_count_estimate(10240), 10)
