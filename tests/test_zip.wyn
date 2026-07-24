@@ -1,24 +1,11 @@
-fn zip_is_archive(path: string) -> bool {
-    return path.ends_with(".zip")
-}
+// Exercises the shipped lib in src/zip.wyn via the tests/zip.wyn symlink.
+import zip
 
-fn zip_compression_ratio(original: int, compressed: int) -> int {
-    if original == 0 { return 0 }
-    return (compressed * 100) / original
-}
-
-fn zip_entry_count_estimate(file_size: int) -> int {
-    if file_size <= 0 { return 0 }
-    return file_size / 1024
-}
-
-fn main() -> int {
-    if zip_is_archive("test.zip") { println("zip detect: pass") }
-    if not zip_is_archive("test.tar") { println("non-zip: pass") }
-    assert_eq(zip_compression_ratio(1000, 300), 30)
-    assert_eq(zip_compression_ratio(0, 0), 0)
-    assert_eq(zip_entry_count_estimate(10240), 10)
-    
-    println("zip: 5 tests passed")
-    return 0
-}
+test "is archive yes" { assert(zip.zip_is_archive("data.zip")) }
+test "is archive no" { assert(not zip.zip_is_archive("data.tar")) }
+test "entry count estimate" { assert_eq(zip.zip_entry_count_estimate(4096), 4) }
+test "entry count zero" { assert_eq(zip.zip_entry_count_estimate(0), 0) }
+test "compression ratio" { assert_eq(zip.zip_compression_ratio(1000, 250), 25) }
+test "compression ratio zero guard" { assert_eq(zip.zip_compression_ratio(0, 5), 0) }
+test "human size bytes" { assert_eq(zip.zip_human_size(512), "512 B") }
+test "human size kb" { assert_eq(zip.zip_human_size(2048), "2.0 KB") }

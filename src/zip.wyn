@@ -2,23 +2,25 @@
 // Pure-Wyn helpers for archive detection, size estimation, and formatting.
 // C bindings (libzip, miniz) would provide: create, extract, list entries, compress, decompress.
 
-fn zip_is_archive(path: string) -> bool {
+pub fn zip_is_archive(path: string) -> bool {
     return path.ends_with(".zip")
 }
 
-fn zip_entry_count_estimate(file_size: int) -> int {
+pub fn zip_entry_count_estimate(file_size: int) -> int {
     if file_size <= 0 { return 0 }
     return file_size / 1024
 }
 
-fn zip_compression_ratio(original: int, compressed: int) -> int {
+pub fn zip_compression_ratio(original: int, compressed: int) -> int {
     if original <= 0 { return 0 }
     return (compressed * 100) / original
 }
 
-fn zip_human_size(bytes: int) -> string {
+pub fn zip_human_size(bytes: int) -> string {
+    // NOTE: a local named `remainder` collides with the libc remainder()
+    // function in generated C (silent corruption), hence `rem_tenths`.
     if bytes < 1024 { return int_to_string(bytes) + " B" }
     var kb = bytes / 1024
-    var remainder = ((bytes % 1024) * 10) / 1024
-    return int_to_string(kb) + "." + int_to_string(remainder) + " KB"
+    var rem_tenths = ((bytes % 1024) * 10) / 1024
+    return int_to_string(kb) + "." + int_to_string(rem_tenths) + " KB"
 }

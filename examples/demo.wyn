@@ -1,0 +1,7 @@
+import zip
+
+fn main() {
+    println("is archive: ${zip.zip_is_archive("backup.zip")}")
+    println("ratio: ${zip.zip_compression_ratio(1000, 250)}%")
+    println("size: ${zip.zip_human_size(2048)}")
+}
